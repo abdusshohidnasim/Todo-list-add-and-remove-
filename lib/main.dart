@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
-import 'package:untitled6/ui/home_f.dart';
-
+import 'ui/home_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -17,8 +16,14 @@ class MyApp extends StatelessWidget {
       title: 'Todo App',
       theme: ThemeData(
         useMaterial3: true,
+        colorSchemeSeed: Colors.red,
       ),
-      home: const HomeF(),
+      home: const HomePage(),
     );
   }
 }
+// Naiem Hassan Naiewm
+
+
+
+

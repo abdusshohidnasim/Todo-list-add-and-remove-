@@ -1,21 +1,40 @@
-
-
-class ModelClass {
+class TodoModel {
   final int id;
-  final String name;
-  final String age;
+  final String title;
+  final String description;
+  final bool isDone;
 
-  ModelClass({required this.id, required this.name, required this.age});
+  TodoModel({
+    required this.id,
+    required this.title,
+    required this.description,
+    this.isDone = false,
+  });
 
-  factory ModelClass.fromMap(Map<String, dynamic> map) {
-    return ModelClass(
+  factory TodoModel.fromMap(Map<String, dynamic> map) {
+    return TodoModel(
       id: map['id'],
-      name: map['name'],
-      age: map['age'],
+      title: map['title'],
+      description: map['description'],
+      isDone: map['isDone'] == 1,
     );
   }
 
   Map<String, Object?> toMap() {
-    return {"id": id, "name": name, "age": age};
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'isDone': isDone ? 1 : 0,
+    };
+  }
+
+  TodoModel copyWith({bool? isDone}) {
+    return TodoModel(
+      id: id,
+      title: title,
+      description: description,
+      isDone: isDone ?? this.isDone,
+    );
   }
 }

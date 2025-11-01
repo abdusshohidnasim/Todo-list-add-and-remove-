@@ -1,12 +1,10 @@
-
-
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../model/model_class.dart';
 
+import '../model/model_class.dart';
 
 class DbHelper {
   Database? _database;
@@ -14,41 +12,45 @@ class DbHelper {
   Future<Database?> get database async {
     if (_database != null) return _database;
 
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = join(directory.path, 'mydatabase.db');
+    Directory dir = await getApplicationDocumentsDirectory();
+    String path = join(dir.path, 'todo.db');
 
     _database = await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: (db, version) async {
         await db.execute('''
-        CREATE TABLE DatabaseTable (
-          id INTEGER PRIMARY KEY,
-          name TEXT,
-          age TEXT
-        )
+          CREATE TABLE todos(
+            id INTEGER PRIMARY KEY,
+            title TEXT,
+            description TEXT,
+            isDone INTEGER
+          )
         ''');
       },
     );
+
     return _database!;
   }
 
-  // Insert data
-  Future<void> insertData(ModelClass modelClass) async {
+  Future<void> insertTodo(TodoModel todo) async {
     final db = await database;
-    await db!.insert('DatabaseTable', modelClass.toMap());
+    await db!.insert('todos', todo.toMap());
   }
 
-  // Read all data
-  Future<List<ModelClass>> readData() async {
+  Future<List<TodoModel>> getTodos() async {
     final db = await database;
-    final List<Map<String, dynamic>> result = await db!.query('DatabaseTable');
-    return result.map((e) => ModelClass.fromMap(e)).toList();
+    final result = await db!.query('todos', orderBy: 'id DESC');
+    return result.map((e) => TodoModel.fromMap(e)).toList();
   }
 
-  // Delete data
-  Future<int> deleteData(int id) async {
+  Future<void> deleteTodo(int id) async {
     final db = await database;
-    return await db!.delete('DatabaseTable', where: 'id = ?', whereArgs: [id]);
+    await db!.delete('todos', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<void> updateTodo(TodoModel todo) async {
+    final db = await database;
+    await db!.update('todos', todo.toMap(), where: 'id = ?', whereArgs: [todo.id]);
   }
 }

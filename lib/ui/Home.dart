@@ -1,64 +1,42 @@
-// import 'package:flutter/material.dart';
-// import 'package:todo/model/model_class.dart';
-// import 'package:todo/servise/db_helper.dart';
-// import 'package:todo/ui/todo.dart';
-//
-// class Home extends StatefulWidget {
-//   const Home({super.key});
-//
-//   @override
-//   State<Home> createState() => _HomeState();
+// ),
+// trailing: IconButton(
+// icon: const Icon(Icons.delete, color: Colors.red),
+// onPressed: () async {
+// final confirm = await showDialog<bool>(
+// context: context,
+// builder: (ctx) => AlertDialog(
+// title: const Text("Delete Todo"),
+// content: const Text("Are you sure you want to delete this todo?"),
+// actions: [
+// TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text("Cancel")),
+// TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text("Delete")),
+// ],
+// ),
+// );
+// if (confirm ?? false) {
+// await dbHelper.deleteTodo(todo.id);
+// refresh();
+// ScaffoldMessenger.of(context).showSnackBar(
+// const SnackBar(content: Text("Todo deleted")),
+// );
 // }
-//
-// class _HomeState extends State<Home> {
-//   final DbHelper dbHelper = DbHelper();
-//
-//   List<ModelClass> items = [];
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     getData();
-//   }
-//
-//   Future<void> getData() async {
-//     final data = await dbHelper.readData();
-//     setState(() {
-//       items = data;
-//     });
-//   }
-//
-//   Future<void> deleteitem(int id) async {
-//     await dbHelper.deleteData(id);
-//     getData();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: ListView.builder(
-//         itemCount: items.length,
-//         itemBuilder: (context, index) {
-//           final item = items[index];
-//           return ListTile(
-//             title: Text(item.name),
-//             subtitle: Text(item.age.toString()),
-//             trailing: IconButton(
-//               onPressed: () {
-//                 dbHelper.deleteData(item.id);
-//               },
-//               icon: Icon(Icons.delete, color: Colors.red[300]),
-//             ),
-//           );
-//         },
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         backgroundColor: Colors.red[200],
-//         onPressed: () {
-//           Navigator.push(context, MaterialPageRoute(builder: (_) => Todo()));
-//         },
-//         child: Icon(Icons.add),
-//       ),
-//     );
-//   }
-// }
+// },
+// ),
+// ),
+// );
+// },
+// );
+// },
+// ),
+// ),
+// floatingActionButton: FloatingActionButton(
+// backgroundColor: Colors.red[300],
+// child: const Icon(Icons.add),
+// onPressed: () async {
+// await Navigator.push(
+// context,
+// MaterialPageRoute(builder: (_) => const AddTodoPage()),
+// );
+// refresh();
+// },
+// ),
